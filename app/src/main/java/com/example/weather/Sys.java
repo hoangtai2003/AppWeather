@@ -1,6 +1,8 @@
 package com.example.weather;
 
-public class Sys {
+import java.io.Serializable;
+
+public class Sys implements Serializable {
     private String country;
     private int id;
     private int sunrise;

@@ -1,6 +1,8 @@
 package com.example.weather;
 
-public class Main {
+import java.io.Serializable;
+
+public class Main implements Serializable {
     private double feels_like;
     private int grnd_level;
     private int humidity;

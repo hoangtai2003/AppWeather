@@ -1,8 +1,9 @@
 package com.example.weather;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class WeatherApp {
+public class WeatherApp implements Serializable {
     private String base;
     private Clouds clouds;
     private int cod;

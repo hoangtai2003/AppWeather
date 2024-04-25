@@ -1,6 +1,8 @@
 package com.example.weather;
 
-public class Clouds {
+import java.io.Serializable;
+
+public class Clouds implements Serializable {
     private int all;
 
     public Clouds(int all) {
