@@ -1,9 +1,8 @@
-package com.example.weather;
+package com.example.weather.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 
@@ -11,7 +10,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weather.model.City;
+import com.example.weather.R;
 import com.example.weather.databinding.ActivityMainBinding;
+import com.example.weather.model.WeatherApp;
+import com.example.weather.network.ApiInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

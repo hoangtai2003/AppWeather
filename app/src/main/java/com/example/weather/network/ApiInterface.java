@@ -1,4 +1,6 @@
-package com.example.weather;
+package com.example.weather.network;
+
+import com.example.weather.model.WeatherApp;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

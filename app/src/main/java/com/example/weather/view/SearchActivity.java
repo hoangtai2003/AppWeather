@@ -1,4 +1,4 @@
-package com.example.weather;
+package com.example.weather.view;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +18,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weather.model.City;
+import com.example.weather.adapter.CityAdapter;
+import com.example.weather.R;
+import com.example.weather.model.WeatherApp;
+import com.example.weather.network.ApiInterface;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;

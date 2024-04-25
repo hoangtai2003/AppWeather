@@ -1,11 +1,7 @@
-package com.example.weather;
+package com.example.weather.view;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,10 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 
+import com.example.weather.R;
 import com.example.weather.databinding.ActivityListCityBinding;
-import com.example.weather.databinding.ActivityMainBinding;
 
 public class ListCityActivity extends AppCompatActivity {
     private ActivityListCityBinding binding;
