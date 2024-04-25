@@ -65,11 +65,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 iPosistion = position;
                 City city = cityList.get(position);
-//                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-//                intent.putExtra("city", city);
-//                startActivity(intent);
-//                finish();
-                fetWeatherDate2(city.getCityName());
+                fetchWeatherData2(city.getCityName());
             }
         });
         rcvCities.setAdapter(cityAdapter);
@@ -90,16 +86,8 @@ public class SearchActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), "City not found", Snackbar.LENGTH_SHORT).show();
     }
 
-    private void fetWeatherDate2(String cityName) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
-                .build();
-
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        Call<WeatherApp> response = apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric");
-        response.enqueue(new Callback<WeatherApp>() {
+    private void fetchWeatherData2(String cityName) {
+        ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();
@@ -121,16 +109,8 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void fetWeatherDate(String cityName) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
-                .build();
-
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        Call<WeatherApp> response = apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric");
-        response.enqueue(new Callback<WeatherApp>() {
+    private void fetchWeatherData(String cityName) {
+        ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();
@@ -211,7 +191,7 @@ public class SearchActivity extends AppCompatActivity {
                             return;
                         }
 
-                        fetWeatherDate(newText);
+                        fetchWeatherData(newText);
 
                         // Loại bỏ các thành phố không phù hợp
                         List<City> citiesToRemove = new ArrayList<>();

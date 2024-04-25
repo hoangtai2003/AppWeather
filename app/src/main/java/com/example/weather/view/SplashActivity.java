@@ -29,15 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void fetWeatherDate(String cityName) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
-                .build();
-
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        Call<WeatherApp> response = apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric");
-        response.enqueue(new Callback<WeatherApp>() {
+        ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();

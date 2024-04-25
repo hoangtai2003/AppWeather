@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        fetWeatherDate("VietNam");
         searchCity();
 
         listLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        fetWeatherDate(city.getCityName());
+                        fetchWeatherData(city.getCityName());
                     }
                 }, 300);
             }
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query != null) {
-                    fetWeatherDate(query);
+                    fetchWeatherData(query);
                 }
                 return true;
             }
@@ -116,16 +115,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void fetWeatherDate(String cityName) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.openweathermap.org/data/2.5/")
-                .build();
-
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-
-        Call<WeatherApp> response = apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric");
-        response.enqueue(new Callback<WeatherApp>() {
+    private void fetchWeatherData(String cityName) {
+        ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();
