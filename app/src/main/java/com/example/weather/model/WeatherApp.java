@@ -151,7 +151,7 @@ public class WeatherApp implements Serializable {
         this.weather = weather;
     }
 
-    public static class CoordBean {
+    public static class CoordBean implements Serializable{
         /**
          * lon : 107.8333
          * lat : 16.1667
@@ -177,7 +177,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class MainBean {
+    public static class MainBean implements Serializable{
         /**
          * temp : 302.13
          * feels_like : 301.74
@@ -263,7 +263,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class WindBean {
+    public static class WindBean implements Serializable{
         /**
          * speed : 2.02
          * deg : 66
@@ -299,7 +299,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class RainBean {
+    public static class RainBean implements Serializable{
         /**
          * 1h : 0.1
          */
@@ -316,7 +316,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class CloudsBean {
+    public static class CloudsBean implements Serializable{
         /**
          * all : 33
          */
@@ -332,7 +332,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class SysBean {
+    public static class SysBean implements Serializable{
         /**
          * type : 1
          * id : 9310
@@ -388,7 +388,7 @@ public class WeatherApp implements Serializable {
         }
     }
 
-    public static class WeatherBean {
+    public static class WeatherBean implements Serializable{
         /**
          * id : 802
          * main : Clouds

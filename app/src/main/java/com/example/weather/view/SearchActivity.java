@@ -54,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Tìm kiếm thành phố");
 
         rcvCities = findViewById(R.id.rcv_cities);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.condition.setText(condition);
                     binding.day.setText(dayName(System.currentTimeMillis()));
                     binding.date.setText(date());
-                    binding.cityName.setText(cityName);
+                    binding.cityName.setText(responseBody.getName());
                     changeImageAccordingToWeatherCondition(condition);
                 } else {
                     binding.cityName.setText("City not found");
