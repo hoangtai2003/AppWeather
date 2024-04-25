@@ -1,6 +1,8 @@
 package com.example.weather;
 
-public class Wind {
+import java.io.Serializable;
+
+public class Wind implements Serializable {
     private int deg;
     private double gust;
     private double speed;

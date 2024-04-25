@@ -1,7 +1,14 @@
 package com.example.weather;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.SearchView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.weather.databinding.ActivityMainBinding;
@@ -18,6 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ImageButton btn_active_list;
+    private ActivityResultLauncher<Intent> listLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +34,64 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        fetWeatherDate("Vietnam");
+//        fetWeatherDate("VietNam");
         searchCity();
+
+        listLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
+        });
+
+        btn_active_list = findViewById(R.id.btnActionList);
+        btn_active_list.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ListCityActivity.class);
+            listLauncher.launch(intent);
+        });
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("weatherData")) {
+            WeatherApp weatherApp = (WeatherApp) intent.getSerializableExtra("weatherData");
+            if (weatherApp != null) {
+                double temperature = weatherApp.getMain().getTemp();
+                int humidity = weatherApp.getMain().getHumidity();
+                double windSpeed = weatherApp.getWind().getSpeed();
+                long sunRise = weatherApp.getSys().getSunrise();
+                long sunSet = weatherApp.getSys().getSunset();
+                int seaLevel = weatherApp.getMain().getPressure();
+                String condition = weatherApp.getWeather().get(0).getMain();
+                double maxTemp = weatherApp.getMain().getTemp_max();
+                double minTemp = weatherApp.getMain().getTemp_min();
+
+                binding.temp.setText(formatTemperature(temperature) + " ℃");
+                binding.weather.setText(condition);
+                binding.maxTemp.setText("Max Temp: " + formatTemperature(maxTemp) + " ℃");
+                binding.minTemp.setText("Min Temp: " + formatTemperature(minTemp) + " ℃");
+                binding.humidity.setText(humidity + " %");
+                binding.wind.setText(windSpeed + " m/s");
+                binding.sunrise.setText(time(sunRise));
+                binding.sunset.setText(time(sunSet));
+                binding.sea.setText(seaLevel + " hpa");
+                binding.condition.setText(condition);
+                binding.day.setText(dayName(System.currentTimeMillis()));
+                binding.date.setText(date());
+                binding.cityName.setText(weatherApp.getName());
+                changeImageAccordingToWeatherCondition(condition);
+            }
+        }
+        else if (intent != null && intent.hasExtra("city")) {
+            City city = (City) intent.getSerializableExtra("city");
+            if (city != null) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fetWeatherDate(city.getCityName());
+                    }
+                }, 300);
+            }
+        }
+        else if (intent != null && intent.hasExtra("Fail")) {
+            String fail = intent.getStringExtra("Fail");
+            binding.cityName.setText(fail);
+        }
     }
 
     private void searchCity() {
@@ -157,4 +222,11 @@ public class MainActivity extends AppCompatActivity {
     private String formatTemperature(double temperature) {
         return String.format(Locale.getDefault(), "%.2f", temperature / 10).replace(",", ".");
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity(); // Kết thúc tất cả các hoạt động và thoát ứng dụng
+    }
+
 }
