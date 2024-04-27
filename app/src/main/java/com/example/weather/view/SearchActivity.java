@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weather.databinding.ActivityMainBinding;
+import com.example.weather.databinding.ActivitySearchBinding;
 import com.example.weather.model.City;
 import com.example.weather.adapter.CityAdapter;
 import com.example.weather.R;
 import com.example.weather.model.WeatherApp;
 import com.example.weather.network.ApiInterface;
+import com.example.weather.roomdatabase.AppDatabase;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -41,22 +46,25 @@ public class SearchActivity extends AppCompatActivity {
     private SearchView searchView;
     private List<City> cityList = new ArrayList<>();
     private int iPosistion;
+    private ActivitySearchBinding binding;
+    private AppDatabase db;
     private Handler handler = new Handler();
     private Runnable runnable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        binding = ActivitySearchBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Tìm kiếm thành phố");
 
-        rcvCities = findViewById(R.id.rcv_cities);
+        rcvCities = binding.rcvCities;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvCities.setLayoutManager(linearLayoutManager);
 
@@ -65,7 +73,27 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 iPosistion = position;
                 City city = cityList.get(position);
-                fetchWeatherData2(city.getCityName());
+                fetchWeatherDataMain(city.getCityName());
+            }
+
+            @Override
+            public void onAddCityClicked(int position) {
+                Intent intent = new Intent();
+
+                City city = cityList.get(position);
+                db = AppDatabase.getDatabase(SearchActivity.this);
+                handler = new Handler(Looper.getMainLooper());
+                AppDatabase.databaseWriteExecutor.execute(() -> {
+                    long newCid = db.cityDao().insert(city);
+                    handler.post(() -> {
+                        intent.putExtra("cityName", city.getCityName());
+                        intent.putExtra("cityCountry", city.getCountryName());
+                        intent.putExtra("cid", newCid);
+                        setResult(RESULT_OK, intent);
+                        SearchActivity.this.finish();
+                    });
+                });
+
             }
         });
         rcvCities.setAdapter(cityAdapter);
@@ -86,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), "City not found", Snackbar.LENGTH_SHORT).show();
     }
 
-    private void fetchWeatherData2(String cityName) {
+    private void fetchWeatherDataMain(String cityName) {
         ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
@@ -109,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchWeatherData(String cityName) {
+    private void fetchWeatherDataAdd(String cityName) {
         ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
@@ -191,7 +219,7 @@ public class SearchActivity extends AppCompatActivity {
                             return;
                         }
 
-                        fetchWeatherData(newText);
+                        fetchWeatherDataAdd(newText);
 
                         // Loại bỏ các thành phố không phù hợp
                         List<City> citiesToRemove = new ArrayList<>();

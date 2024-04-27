@@ -2,9 +2,7 @@ package com.example.weather.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.model.City;
 import com.example.weather.R;
+import com.example.weather.model.City;
 import com.example.weather.roomdatabase.AppDatabase;
-import com.example.weather.view.SearchActivity;
 
 import java.util.List;
 
-public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder> {
-
+public class CityAdapterList extends RecyclerView.Adapter<CityAdapterList.CityViewHoder>{
     private List<City> mListCities;
     private Context context;
     private ClickListeners clickListeners;
-    private AppDatabase db;
-    private Handler hnHandler;
 
-    public CityAdapter(Context context, List<City> mListCities, ClickListeners clickListeners) {
+    public CityAdapterList(Context context, List<City> mListCities, ClickListeners clickListeners) {
         this.context = context;
         this.mListCities = mListCities;
         this.clickListeners = clickListeners;
@@ -37,26 +31,21 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
 
     @NonNull
     @Override
-    public CityViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_city, parent, false);
-        return new CityViewHoder(view);
+    public CityAdapterList.CityViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_city_list, parent, false);
+        return new CityAdapterList.CityViewHoder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CityViewHoder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull CityViewHoder holder, int position) {
         City city = mListCities.get(position);
         if (city == null) {
             return;
         }
 
         holder.tvCityName.setText(city.getCityName()+ " - " + city.getCountryName());
-        holder.btnAddCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListeners.onAddCityClicked(position);
-            }
-        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -69,12 +58,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
     public class CityViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView tvCityName;
-        private ImageButton btnAddCity;
 
         public CityViewHoder(@NonNull View itemView) {
             super(itemView);
             tvCityName = itemView.findViewById(R.id.tvCityName);
-            btnAddCity = itemView.findViewById(R.id.btnAddCity);
 
             itemView.setOnClickListener(this);
         }
@@ -87,6 +74,5 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
 
     public interface ClickListeners{
         void onItemClick(int position, View v);
-        void onAddCityClicked(int position);
     }
 }

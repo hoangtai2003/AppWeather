@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        btn_active_list = findViewById(R.id.btnActionList);
+        btn_active_list = binding.btnActionList;
         btn_active_list.setOnClickListener(v -> {
             Intent intent = new Intent(this, ListCityActivity.class);
             listLauncher.launch(intent);

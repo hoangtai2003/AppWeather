@@ -24,11 +24,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        fetWeatherDate("Hanoi");
+        fetWeatherData("Hanoi");
 
     }
 
-    private void fetWeatherDate(String cityName) {
+    private void fetWeatherData(String cityName) {
         ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
