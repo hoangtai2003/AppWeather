@@ -106,9 +106,10 @@ public class ListCityActivity extends AppCompatActivity {
                            Snackbar mySnackbar = Snackbar.make(binding.parentLayout, "Bạn có chắc muốn xóa thành phố này?", Snackbar.LENGTH_SHORT);
                            mySnackbar.setAction("Xác nhận", view -> {
                                AppDatabase.databaseWriteExecutor.execute(() -> {
-                                   db.cityDao().delete(cityList.get(position));
+                                   City deletedCity = cityList.get(position);
+                                   db.cityDao().delete(deletedCity);
                                    hnHandler.post(() -> {
-                                       City deletedCity = cityList.remove(position);
+                                       cityList.remove(position);
                                        cityAdapterList.notifyItemRemoved(position);
                                        showUndoCity(position, deletedCity);
                                    });
@@ -136,7 +137,8 @@ public class ListCityActivity extends AppCompatActivity {
             Snackbar mySnackbar = Snackbar.make(binding.parentLayout, "Bấm để hoàn tác.", Snackbar.LENGTH_SHORT);
             mySnackbar.setAction("Hoàn tác", v -> {
                 AppDatabase.databaseWriteExecutor.execute(() -> {
-                    long newCid = db.cityDao().insert(city);
+                    int newCid = (int) db.cityDao().insert(city);
+                    city.setCid(newCid);
                     hnHandler.post(() -> {
                         cityList.add(position, city);
                         cityAdapterList.notifyItemInserted(position);

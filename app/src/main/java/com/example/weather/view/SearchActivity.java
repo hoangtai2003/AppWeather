@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
                 AppDatabase.databaseWriteExecutor.execute(() -> {
                     City existCity = db.cityDao().getCityByName(city.getCityName());
                     if (existCity == null) {
-                        long newCid = db.cityDao().insert(city);
+                        int newCid = (int) db.cityDao().insert(city);
                         handler.post(() -> {
                             intent.putExtra("cityName", city.getCityName());
                             intent.putExtra("cityCountry", city.getCountryName());
