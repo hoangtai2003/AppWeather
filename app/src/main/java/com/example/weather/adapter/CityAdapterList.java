@@ -55,7 +55,7 @@ public class CityAdapterList extends RecyclerView.Adapter<CityAdapterList.CityVi
         return 0;
     }
 
-    public class CityViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class CityViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         private TextView tvCityName;
 
@@ -64,15 +64,23 @@ public class CityAdapterList extends RecyclerView.Adapter<CityAdapterList.CityVi
             tvCityName = itemView.findViewById(R.id.tvCityName);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             clickListeners.onItemClick(getAdapterPosition(), v);
         }
+
+        @Override
+        public boolean onLongClick(View v) {
+            clickListeners.onItemLongClick(getAdapterPosition(), v);
+            return true;
+        }
     }
 
     public interface ClickListeners{
         void onItemClick(int position, View v);
+        void onItemLongClick(int position, View v);
     }
 }

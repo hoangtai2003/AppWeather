@@ -84,14 +84,21 @@ public class SearchActivity extends AppCompatActivity {
                 db = AppDatabase.getDatabase(SearchActivity.this);
                 handler = new Handler(Looper.getMainLooper());
                 AppDatabase.databaseWriteExecutor.execute(() -> {
-                    long newCid = db.cityDao().insert(city);
-                    handler.post(() -> {
-                        intent.putExtra("cityName", city.getCityName());
-                        intent.putExtra("cityCountry", city.getCountryName());
-                        intent.putExtra("cid", newCid);
-                        setResult(RESULT_OK, intent);
-                        SearchActivity.this.finish();
-                    });
+                    City existCity = db.cityDao().getCityByName(city.getCityName());
+                    if (existCity == null) {
+                        long newCid = db.cityDao().insert(city);
+                        handler.post(() -> {
+                            intent.putExtra("cityName", city.getCityName());
+                            intent.putExtra("cityCountry", city.getCountryName());
+                            intent.putExtra("cid", newCid);
+                            setResult(RESULT_OK, intent);
+                            SearchActivity.this.finish();
+                        });
+                    } else {
+                        handler.post(() -> {
+                            Toast.makeText(SearchActivity.this, "Thành phố đã tồn tại trong danh sách!", Toast.LENGTH_SHORT).show();
+                        });
+                    }
                 });
 
             }

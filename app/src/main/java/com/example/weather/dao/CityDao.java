@@ -15,6 +15,9 @@ public interface CityDao {
     @Query("Select * from city order by cid desc")
     List<City> getAllCity();
 
+    @Query("Select * from city where cityName = :cityName")
+    City getCityByName(String cityName);
+
     @Insert
     long insert(City city);
 

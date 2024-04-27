@@ -28,6 +28,7 @@ import com.example.weather.model.City;
 import com.example.weather.model.WeatherApp;
 import com.example.weather.network.ApiInterface;
 import com.example.weather.roomdatabase.AppDatabase;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -99,6 +100,22 @@ public class ListCityActivity extends AppCompatActivity {
                            City city = cityList.get(position);
                            fetchWeatherDataMain(city.getCityName());
                        }
+
+                       @Override
+                       public void onItemLongClick(int position, View v) {
+                           Snackbar mySnackbar = Snackbar.make(binding.parentLayout, "Bạn có chắc muốn xóa thành phố này?", Snackbar.LENGTH_SHORT);
+                           mySnackbar.setAction("Xác nhận", view -> {
+                               AppDatabase.databaseWriteExecutor.execute(() -> {
+                                   db.cityDao().delete(cityList.get(position));
+                                   hnHandler.post(() -> {
+                                       City deletedCity = cityList.remove(position);
+                                       cityAdapterList.notifyItemRemoved(position);
+                                       showUndoCity(position, deletedCity);
+                                   });
+                               });
+                           });
+                           mySnackbar.show();
+                       }
                    });
                    // set dữ liệu cho rcv
 
@@ -111,6 +128,24 @@ public class ListCityActivity extends AppCompatActivity {
             });
         } catch (Exception ex) {
             Log.e("Get all city: ", ex.getMessage());
+        }
+    }
+
+    public void showUndoCity(int position, City city) {
+        try {
+            Snackbar mySnackbar = Snackbar.make(binding.parentLayout, "Bấm để hoàn tác.", Snackbar.LENGTH_SHORT);
+            mySnackbar.setAction("Hoàn tác", v -> {
+                AppDatabase.databaseWriteExecutor.execute(() -> {
+                    long newCid = db.cityDao().insert(city);
+                    hnHandler.post(() -> {
+                        cityList.add(position, city);
+                        cityAdapterList.notifyItemInserted(position);
+                    });
+                });
+            });
+            mySnackbar.show();
+        } catch (Exception ex) {
+            Log.e("ShowUndoCity", ex.getMessage());
         }
     }
 
