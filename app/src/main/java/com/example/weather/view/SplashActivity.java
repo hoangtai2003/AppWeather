@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.example.weather.R;
 import com.example.weather.model.WeatherApp;
 import com.example.weather.network.ApiInterface;
+import com.example.weather.network.CheckInternet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +26,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        fetWeatherData("Hanoi");
+        if (CheckInternet.isNetworkAvailable(this))
+            fetWeatherData("Hanoi");
+        else
+            Toast.makeText(SplashActivity.this, "Không có kết nối mạng, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
 
     }
 
