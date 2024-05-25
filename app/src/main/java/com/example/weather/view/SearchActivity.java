@@ -139,7 +139,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<WeatherApp> call, @NonNull Throwable t) {
-
+                Toast.makeText(SearchActivity.this, "Không có kết nối mạng, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -173,7 +173,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<WeatherApp> call, @NonNull Throwable t) {
-                showCityNotFoundMessage();
+                Toast.makeText(SearchActivity.this, "Không có kết nối mạng, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -228,7 +228,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         fetchWeatherDataAdd(newText);
 
-                        // Loại bỏ các thành phố không phù hợp
+                        // Loại bỏ các thành phố không phù hợp với newText
                         List<City> citiesToRemove = new ArrayList<>();
                         for (City city : cityList) {
                             if (!city.getCityName().toLowerCase().trim().contains(newText.toLowerCase().trim())) {

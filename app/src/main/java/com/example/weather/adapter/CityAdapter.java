@@ -26,8 +26,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
     private List<City> mListCities;
     private Context context;
     private ClickListeners clickListeners;
-    private AppDatabase db;
-    private Handler hnHandler;
 
     public CityAdapter(Context context, List<City> mListCities, ClickListeners clickListeners) {
         this.context = context;

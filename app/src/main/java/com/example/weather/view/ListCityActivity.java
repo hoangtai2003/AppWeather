@@ -169,7 +169,7 @@ public class ListCityActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<WeatherApp> call, @NonNull Throwable t) {
-
+                Toast.makeText(ListCityActivity.this, "Không có kết nối mạng, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         });
     }

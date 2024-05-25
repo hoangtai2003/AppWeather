@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
         requestLocationPermission();
     }
 
+    // check quyền
     private void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
@@ -51,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    // nếu cấp quyền
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -62,6 +64,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void getLastKnownLocation() {
+        // nếu có quyền truy cập vị trí
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -85,6 +88,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void getCityNameFromLocation(double latitude, double longitude) {
+        // geocoder lấy tên thành phố dựa vào vĩ độ, kinh độ
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);

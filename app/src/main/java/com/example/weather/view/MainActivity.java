@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -80,21 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 changeImageAccordingToWeatherCondition(condition);
             }
         }
-        else if (intent != null && intent.hasExtra("city")) {
-            City city = (City) intent.getSerializableExtra("city");
-            if (city != null) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        fetchWeatherData(city.getCityName());
-                    }
-                }, 300);
-            }
-        }
-        else if (intent != null && intent.hasExtra("Fail")) {
-            String fail = intent.getStringExtra("Fail");
-            binding.cityName.setText(fail);
-        }
     }
 
     private void searchCity() {
@@ -152,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<WeatherApp> call, @NonNull Throwable t) {
-                binding.cityName.setText("City not found");
+                Toast.makeText(MainActivity.this, "Không có kết nối mạng, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         });
     }
