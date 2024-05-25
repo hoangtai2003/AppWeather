@@ -57,8 +57,6 @@ public class SplashActivity extends AppCompatActivity {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastKnownLocation();
-            } else {
-                showExplanationDialog();
             }
         }
     }
@@ -130,16 +128,5 @@ public class SplashActivity extends AppCompatActivity {
         intent.putExtra("weatherData", weatherApp);
         startActivity(intent);
         finish();
-    }
-    private void showExplanationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Quyền Truy Cập Vị Trí");
-        builder.setMessage("Ứng dụng cần quyền truy cập vị trí để hiển thị dữ liệu thời tiết. Vui lòng cấp quyền truy cập để tiếp tục.");
-        builder.setPositiveButton("Đồng Ý", (dialogInterface, i) -> ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE));
-        builder.setNegativeButton("Từ Chối", (dialogInterface, i) -> {
-            finish();
-        });
-        builder.setCancelable(false);
-        builder.show();
     }
 }
