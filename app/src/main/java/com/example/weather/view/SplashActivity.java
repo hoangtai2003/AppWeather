@@ -100,7 +100,7 @@ public class SplashActivity extends AppCompatActivity {
                     Toast.makeText(SplashActivity.this, "Không thể xác minh tên thành phố, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(SplashActivity.this, "Không thể lấy dữ liệu thời tiết, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, "Không tồn tại địa chỉ, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
