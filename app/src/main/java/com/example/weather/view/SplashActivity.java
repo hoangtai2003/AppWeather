@@ -59,6 +59,8 @@ public class SplashActivity extends AppCompatActivity {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastKnownLocation();
+            } else {
+                Toast.makeText(SplashActivity.this, "Quyền truy cập bị từ chối, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         }
     }

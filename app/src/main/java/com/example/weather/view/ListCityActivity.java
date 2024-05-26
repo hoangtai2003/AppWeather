@@ -14,14 +14,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.R;
-import com.example.weather.adapter.CityAdapter;
+
 import com.example.weather.adapter.CityAdapterList;
 import com.example.weather.databinding.ActivityListCityBinding;
 import com.example.weather.model.City;
@@ -31,6 +29,7 @@ import com.example.weather.roomdatabase.AppDatabase;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,9 +39,7 @@ public class ListCityActivity extends AppCompatActivity {
     private ActivityListCityBinding binding;
     private CityAdapterList cityAdapterList;
     private RecyclerView rcv_cities;
-    private SearchView searchView;
     private int iPosistion;
-    private ImageButton btn_active_search;
     private AppDatabase db;
     private ArrayList<City> cityList;
     private Handler hnHandler;
@@ -58,13 +55,14 @@ public class ListCityActivity extends AppCompatActivity {
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("");
 
         searchLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result != null && result.getResultCode() == RESULT_OK) {
                 //lay ve gia tri tai result
+                assert result.getData() != null;
                 String cityName = result.getData().getStringExtra("cityName");
                 String cityCountry = result.getData().getStringExtra("cityCountry");
                 int cid = result.getData().getIntExtra("cid", 0);
@@ -75,7 +73,7 @@ public class ListCityActivity extends AppCompatActivity {
             }
         });
 
-        btn_active_search = binding.btnSearch;
+        ImageButton btn_active_search = binding.btnSearch;
         btn_active_search.setOnClickListener(v -> {
             Intent intent = new Intent(this, SearchActivity.class);
             searchLauncher.launch(intent);
@@ -128,7 +126,7 @@ public class ListCityActivity extends AppCompatActivity {
                 });
             });
         } catch (Exception ex) {
-            Log.e("Get all city: ", ex.getMessage());
+            Log.e("Get all city: ", Objects.requireNonNull(ex.getMessage()));
         }
     }
 
@@ -147,7 +145,7 @@ public class ListCityActivity extends AppCompatActivity {
             });
             mySnackbar.show();
         } catch (Exception ex) {
-            Log.e("ShowUndoCity", ex.getMessage());
+            Log.e("ShowUndoCity", Objects.requireNonNull(ex.getMessage()));
         }
     }
 

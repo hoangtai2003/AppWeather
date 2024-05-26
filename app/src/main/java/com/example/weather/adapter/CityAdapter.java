@@ -2,9 +2,6 @@ package com.example.weather.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weather.model.City;
 import com.example.weather.R;
-import com.example.weather.roomdatabase.AppDatabase;
-import com.example.weather.view.SearchActivity;
 
 import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder> {
 
-    private List<City> mListCities;
-    private Context context;
-    private ClickListeners clickListeners;
+    private final List<City> mListCities;
+    private final ClickListeners clickListeners;
 
     public CityAdapter(Context context, List<City> mListCities, ClickListeners clickListeners) {
-        this.context = context;
         this.mListCities = mListCities;
         this.clickListeners = clickListeners;
     }
@@ -40,6 +33,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
         return new CityViewHoder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CityViewHoder holder, @SuppressLint("RecyclerView") int position) {
         City city = mListCities.get(position);
@@ -66,8 +60,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
 
     public class CityViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView tvCityName;
-        private ImageButton btnAddCity;
+        private final TextView tvCityName;
+        private final ImageButton btnAddCity;
 
         public CityViewHoder(@NonNull View itemView) {
             super(itemView);

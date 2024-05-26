@@ -1,5 +1,6 @@
 package com.example.weather.view;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.databinding.ActivityMainBinding;
 import com.example.weather.databinding.ActivitySearchBinding;
 import com.example.weather.model.City;
 import com.example.weather.adapter.CityAdapter;
@@ -28,25 +27,20 @@ import com.example.weather.R;
 import com.example.weather.model.WeatherApp;
 import com.example.weather.network.ApiInterface;
 import com.example.weather.roomdatabase.AppDatabase;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private RecyclerView rcvCities;
     private CityAdapter cityAdapter;
     private SearchView searchView;
-    private List<City> cityList = new ArrayList<>();
+    private final List<City> cityList = new ArrayList<>();
     private int iPosistion;
-    private ActivitySearchBinding binding;
     private AppDatabase db;
     private Handler handler = new Handler();
     private Runnable runnable;
@@ -54,17 +48,17 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySearchBinding.inflate(getLayoutInflater());
+        com.example.weather.databinding.ActivitySearchBinding binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); // Hiển thị nút quay lại
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Tìm kiếm thành phố");
 
-        rcvCities = binding.rcvCities;
+        RecyclerView rcvCities = binding.rcvCities;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvCities.setLayoutManager(linearLayoutManager);
 
@@ -95,9 +89,7 @@ public class SearchActivity extends AppCompatActivity {
                             SearchActivity.this.finish();
                         });
                     } else {
-                        handler.post(() -> {
-                            Toast.makeText(SearchActivity.this, "Thành phố đã tồn tại trong danh sách!", Toast.LENGTH_SHORT).show();
-                        });
+                        handler.post(() -> Toast.makeText(SearchActivity.this, "Thành phố đã tồn tại trong danh sách!", Toast.LENGTH_SHORT).show());
                     }
                 });
 
@@ -112,13 +104,10 @@ public class SearchActivity extends AppCompatActivity {
         openAndFocusSearchView();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void addCityToList(City city) {
         cityList.add(city);
         cityAdapter.notifyDataSetChanged();
-    }
-
-    private void showCityNotFoundMessage() {
-        Snackbar.make(findViewById(android.R.id.content), "City not found", Snackbar.LENGTH_SHORT).show();
     }
 
     private void fetchWeatherDataMain(String cityName) {
@@ -199,6 +188,7 @@ public class SearchActivity extends AppCompatActivity {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        assert searchView != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
@@ -216,6 +206,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 // Tạo runnable mới để gọi API sau 300ms mỗi khi người dùng nhập
                 runnable = new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
                         // Kiểm tra newText có trống không

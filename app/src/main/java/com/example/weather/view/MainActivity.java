@@ -1,8 +1,8 @@
 package com.example.weather.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weather.model.City;
 import com.example.weather.R;
 import com.example.weather.databinding.ActivityMainBinding;
 import com.example.weather.model.WeatherApp;
@@ -24,15 +23,13 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private ImageButton btn_active_list;
     private ActivityResultLauncher<Intent> listLauncher;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        btn_active_list = binding.btnActionList;
+        ImageButton btn_active_list = binding.btnActionList;
         btn_active_list.setOnClickListener(v -> {
             Intent intent = new Intent(this, ListCityActivity.class);
             listLauncher.launch(intent);
@@ -103,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchWeatherData(String cityName) {
         ApiInterface.apiInterface.getweatherData(cityName, "9d25492b3c5d467f46369b1d01a67d7a", "metric").enqueue(new Callback<WeatherApp>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();
