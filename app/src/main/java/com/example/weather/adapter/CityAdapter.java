@@ -42,12 +42,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHoder>
         }
 
         holder.tvCityName.setText(city.getCityName()+ " - " + city.getCountryName());
-        holder.btnAddCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListeners.onAddCityClicked(position);
-            }
-        });
+        holder.btnAddCity.setOnClickListener(v -> clickListeners.onAddCityClicked(position));
     }
 
     @Override

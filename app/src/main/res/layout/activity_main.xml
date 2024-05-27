@@ -27,7 +27,7 @@
         android:layout_marginEnd="60dp"
         android:background="@drawable/searchviewshape"
         android:iconifiedByDefault="false"
-        android:queryHint="Search For A City"
+        android:queryHint="Tìm kiếm tên thành phố"
         android:searchIcon="@drawable/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/merriweathersans_bold"
-        android:text="Today"
+        android:text="Hôm nay"
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/merriweathersans_regular"
-        android:text="MAX : 00:00℃ "
+        android:text="Nhiệt độ cao nhất : 00:00℃ "
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/merriweathersans_regular"
-        android:text="MIN : 00:00℃ "
+        android:text="Nhiệt độ thấp nhất : 00:00℃ "
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/max_temp"
@@ -193,7 +193,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Humidity"
+                    android:text="Độ ẩm"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -226,7 +226,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Wind Speed"
+                    android:text="Tốc độ gió"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -260,7 +260,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Condition"
+                    android:text="Tình trạng"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -293,7 +293,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sunrise"
+                    android:text="Mặt trời mọc"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -326,7 +326,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sunset"
+                    android:text="Mặt trời lặn"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -359,7 +359,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sea"
+                    android:text="Mực nước biển"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>

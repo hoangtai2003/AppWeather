@@ -11,22 +11,24 @@
         android:id="@+id/imageView"
         android:layout_width="211dp"
         android:layout_height="140dp"
+        android:layout_marginTop="220dp"
         android:src="@drawable/white_cloud"
-        android:layout_marginTop="268dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Weather Matters, \nWe've Got the Details"
+        android:text="Xin chào!\nSẵn sàng cho một ngày mới với dự báo thời tiết"
         android:textColor="@color/white"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="65dp"
         android:textAlignment="center"
         android:textSize="25sp"
         android:fontFamily="@font/merriweathersans_bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

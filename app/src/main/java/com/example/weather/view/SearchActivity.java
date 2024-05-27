@@ -169,15 +169,12 @@ public class SearchActivity extends AppCompatActivity {
 
     private void openAndFocusSearchView() {
         // Sử dụng Handler để đảm bảo rằng SearchView được mở và focus sau khi layout hoàn thành
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (searchView != null) {
-                    // Mở SearchView
-                    searchView.setIconified(false);
-                    // Focus vào SearchView
-                    searchView.requestFocus();
-                }
+        handler.postDelayed(() -> {
+            if (searchView != null) {
+                // Mở SearchView
+                searchView.setIconified(false);
+                // Focus vào SearchView
+                searchView.requestFocus();
             }
         }, 200); // Đợi 200ms trước khi mở SearchView để đảm bảo layout đã hoàn thành
     }

@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
                 binding.temp.setText(formatTemperature(temperature) + " ℃");
                 binding.weather.setText(condition);
-                binding.maxTemp.setText("Max Temp: " + formatTemperature(maxTemp) + " ℃");
-                binding.minTemp.setText("Min Temp: " + formatTemperature(minTemp) + " ℃");
+                binding.maxTemp.setText("Nhiệt độ cao nhất: " + formatTemperature(maxTemp) + " ℃");
+                binding.minTemp.setText("Nhiệt độ thấp nhất: " + formatTemperature(minTemp) + " ℃");
                 binding.humidity.setText(humidity + " %");
                 binding.wind.setText(windSpeed + " m/s");
                 binding.sunrise.setText(time(sunRise));
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
                     binding.temp.setText(formatTemperature(temperature) + " ℃");
                     binding.weather.setText(condition);
-                    binding.maxTemp.setText("Max Temp: " + formatTemperature(maxTemp) + " ℃");
-                    binding.minTemp.setText("Min Temp: " + formatTemperature(minTemp) + " ℃");
+                    binding.maxTemp.setText("Nhiệt độ cao nhất: " + formatTemperature(maxTemp) + " ℃");
+                    binding.minTemp.setText("Nhiệt độ thấp nhất: " + formatTemperature(minTemp) + " ℃");
                     binding.humidity.setText(humidity + " %");
                     binding.wind.setText(windSpeed + " m/s");
                     binding.sunrise.setText(time(sunRise));

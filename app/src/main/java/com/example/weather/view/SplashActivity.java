@@ -1,12 +1,12 @@
 package com.example.weather.view;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -29,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -59,8 +60,6 @@ public class SplashActivity extends AppCompatActivity {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastKnownLocation();
-            } else {
-                Toast.makeText(SplashActivity.this, "Quyền truy cập bị từ chối, vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
         }
     }
