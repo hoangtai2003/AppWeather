@@ -52,30 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("weatherData")) {
             WeatherApp weatherApp = (WeatherApp) intent.getSerializableExtra("weatherData");
             if (weatherApp != null) {
-                double temperature = weatherApp.getMain().getTemp();
-                int humidity = weatherApp.getMain().getHumidity();
-                double windSpeed = weatherApp.getWind().getSpeed();
-                long sunRise = weatherApp.getSys().getSunrise();
-                long sunSet = weatherApp.getSys().getSunset();
-                int seaLevel = weatherApp.getMain().getPressure();
-                String condition = weatherApp.getWeather().get(0).getMain();
-                double maxTemp = weatherApp.getMain().getTemp_max();
-                double minTemp = weatherApp.getMain().getTemp_min();
-
-                binding.temp.setText(formatTemperature(temperature) + " ℃");
-                binding.weather.setText(condition);
-                binding.maxTemp.setText("Nhiệt độ cao nhất: " + formatTemperature(maxTemp) + " ℃");
-                binding.minTemp.setText("Nhiệt độ thấp nhất: " + formatTemperature(minTemp) + " ℃");
-                binding.humidity.setText(humidity + " %");
-                binding.wind.setText(windSpeed + " m/s");
-                binding.sunrise.setText(time(sunRise));
-                binding.sunset.setText(time(sunSet));
-                binding.sea.setText(seaLevel + " hpa");
-                binding.condition.setText(condition);
-                binding.day.setText(dayName(System.currentTimeMillis()));
-                binding.date.setText(date());
-                binding.cityName.setText(weatherApp.getName());
-                changeImageAccordingToWeatherCondition(condition);
+                updateWeatherUI(weatherApp);
             }
         }
     }
@@ -105,30 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<WeatherApp> call, @NonNull Response<WeatherApp> response) {
                 WeatherApp responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    double temperature = responseBody.getMain().getTemp();
-                    int humidity = responseBody.getMain().getHumidity();
-                    double windSpeed = responseBody.getWind().getSpeed();
-                    long sunRise = responseBody.getSys().getSunrise();
-                    long sunSet = responseBody.getSys().getSunset();
-                    int seaLevel = responseBody.getMain().getPressure();
-                    String condition = responseBody.getWeather().get(0).getMain();
-                    double maxTemp = responseBody.getMain().getTemp_max();
-                    double minTemp = responseBody.getMain().getTemp_min();
-
-                    binding.temp.setText(formatTemperature(temperature) + " ℃");
-                    binding.weather.setText(condition);
-                    binding.maxTemp.setText("Nhiệt độ cao nhất: " + formatTemperature(maxTemp) + " ℃");
-                    binding.minTemp.setText("Nhiệt độ thấp nhất: " + formatTemperature(minTemp) + " ℃");
-                    binding.humidity.setText(humidity + " %");
-                    binding.wind.setText(windSpeed + " m/s");
-                    binding.sunrise.setText(time(sunRise));
-                    binding.sunset.setText(time(sunSet));
-                    binding.sea.setText(seaLevel + " hpa");
-                    binding.condition.setText(condition);
-                    binding.day.setText(dayName(System.currentTimeMillis()));
-                    binding.date.setText(date());
-                    binding.cityName.setText(responseBody.getName());
-                    changeImageAccordingToWeatherCondition(condition);
+                    updateWeatherUI(responseBody);
                 } else {
                     binding.cityName.setText("City not found");
                 }
@@ -140,7 +94,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @SuppressLint("SetTextI18n")
+    private void updateWeatherUI(WeatherApp weatherApp) {
+        double temperature = weatherApp.getMain().getTemp();
+        int humidity = weatherApp.getMain().getHumidity();
+        double windSpeed = weatherApp.getWind().getSpeed();
+        long sunRise = weatherApp.getSys().getSunrise();
+        long sunSet = weatherApp.getSys().getSunset();
+        int seaLevel = weatherApp.getMain().getPressure();
+        String condition = weatherApp.getWeather().get(0).getMain();
+        double maxTemp = weatherApp.getMain().getTemp_max();
+        double minTemp = weatherApp.getMain().getTemp_min();
 
+        binding.temp.setText(formatTemperature(temperature) + " ℃");
+        binding.weather.setText(condition);
+        binding.maxTemp.setText("Nhiệt độ cao nhất: " + formatTemperature(maxTemp) + " ℃");
+        binding.minTemp.setText("Nhiệt độ thấp nhất: " + formatTemperature(minTemp) + " ℃");
+        binding.humidity.setText(humidity + " %");
+        binding.wind.setText(windSpeed + " m/s");
+        binding.sunrise.setText(time(sunRise));
+        binding.sunset.setText(time(sunSet));
+        binding.sea.setText(seaLevel + " hpa");
+        binding.condition.setText(condition);
+        binding.day.setText(dayName(System.currentTimeMillis()));
+        binding.date.setText(date());
+        binding.cityName.setText(weatherApp.getName());
+        changeImageAccordingToWeatherCondition(condition);
+    }
     private void changeImageAccordingToWeatherCondition(String condition) {
         switch (condition) {
             case "Sunny":
